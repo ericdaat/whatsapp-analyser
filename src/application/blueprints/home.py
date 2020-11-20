@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 from plotly.offline.offline import plot
 
 from src.parser.chat import read_chat, chat_pipeline
-from src.application.viz import plotly_figure_to_div
+from src.application import viz
 
 bp = flask.Blueprint("home", __name__)
 
@@ -22,16 +22,18 @@ def chat():
     chat_df = chat_pipeline(chat)
 
     # Graphs
-    data = chat_df\
-        .groupby("author")["message"]\
-        .count()\
-        .sort_values(ascending=False)
+    graph_divs = []
+    graph_function_list = [
+        viz.nb_messages_per_author,
+        viz.len_messages_per_author
+    ]
 
-    fig = go.Figure(
-        data=go.Bar(x=data.index,
-                    y=data.values)
+    for graph_function in graph_function_list:
+        fig = graph_function(chat_df)
+        div = viz.plotly_figure_to_div(fig)
+        graph_divs.append(div)
+
+    return flask.render_template(
+        "chat.html",
+        graph_divs=graph_divs
     )
-
-    div = plotly_figure_to_div(fig)
-
-    return flask.render_template("chat.html", div=div)

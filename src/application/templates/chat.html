@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 
 {% block body %}
-<p>Hi</p>
+<h1>Graphs</h1>
 
-{{div|safe}}
+{% for div in graph_divs %}
+    {{div|safe}}
+{% endfor %}
+
 {% endblock %}
 
