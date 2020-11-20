@@ -30,7 +30,7 @@ def timeline_per_author(chat_df):
         x="timestamp",
         y="message_len",
         facet_col="author",
-        facet_col_wrap=3
+        facet_col_wrap=4
     )
 
     return fig
@@ -48,7 +48,8 @@ def plotly_figure_to_div(fig, include_plotlyjs=False, static_plot=False):
     fig.update_layout(
         template="plotly_white",
         margin=dict(t=40, b=20, l=10, r=10),
-        autosize=True
+        autosize=True,
+        height=500
     )
 
     div = opy.plot(

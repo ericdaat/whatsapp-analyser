@@ -24,15 +24,15 @@ def chat():
     # Graphs
     graph_divs = []
     graph_function_list = [
-        viz.nb_messages_per_author,
-        viz.len_messages_per_author,
-        viz.timeline_per_author
+        ("Nombre de messages, par auteur", viz.nb_messages_per_author),
+        ("Longueur des messages, par auteur", viz.len_messages_per_author),
+        ("Evolution de la longeur des messages, par auteur", viz.timeline_per_author)
     ]
 
-    for graph_function in graph_function_list:
+    for graph_title, graph_function in graph_function_list:
         fig = graph_function(chat_df)
         div = viz.plotly_figure_to_div(fig)
-        graph_divs.append(div)
+        graph_divs.append((graph_title, div))
 
     return flask.render_template(
         "chat.html",
