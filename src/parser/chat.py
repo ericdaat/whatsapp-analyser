@@ -20,6 +20,7 @@ def chat_pipeline(chat):
     )
     messages_df = messages_df.dropna()
 
+    messages_df["timestamp"] = messages_df["timestamp"].apply(pd.Timestamp)
     messages_df["message_len"] = messages_df["message"].apply(len)
     messages_df["message_nlp"] = messages_df["message"].apply(nlp_message)
 

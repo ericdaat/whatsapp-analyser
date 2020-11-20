@@ -25,7 +25,8 @@ def chat():
     graph_divs = []
     graph_function_list = [
         viz.nb_messages_per_author,
-        viz.len_messages_per_author
+        viz.len_messages_per_author,
+        viz.timeline_per_author
     ]
 
     for graph_function in graph_function_list:

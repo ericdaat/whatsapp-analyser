@@ -1,6 +1,7 @@
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.offline as opy
+import plotly.express as px
 
 
 def nb_messages_per_author(chat_df):
@@ -18,14 +19,18 @@ def nb_messages_per_author(chat_df):
 
 
 def len_messages_per_author(chat_df):
-    data = chat_df\
-        .groupby("author")["message_len"]\
-        .mean()\
-        .sort_values(ascending=False)
+    fig = px.box(chat_df, x="author", y="message_len")
 
-    fig = go.Figure(
-        data=go.Bar(x=data.index,
-                    y=data.values)
+    return fig
+
+
+def timeline_per_author(chat_df):
+    fig = px.scatter(
+        chat_df,
+        x="timestamp",
+        y="message_len",
+        facet_col="author",
+        facet_col_wrap=3
     )
 
     return fig
