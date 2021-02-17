@@ -18,21 +18,22 @@ def index():
 @bp.route("/chat")
 def chat():
     # Load dataset
-    chat = read_chat(path=None)
+    chat = read_chat(path="/Users/eric/Downloads/_chat 2.txt")
     chat_df = chat_pipeline(chat)
 
     # Graphs
     graph_divs = []
     graph_function_list = [
-        ("Nombre de messages, par auteur", viz.nb_messages_per_author),
-        ("Longueur des messages, par auteur", viz.len_messages_per_author),
-        ("Evolution de la longeur des messages, par auteur", viz.timeline_per_author)
+        viz.nb_messages_per_author,
+        viz.len_messages_per_author,
+        viz.timeline_per_author,
+        viz.most_frequent_words
     ]
 
-    for graph_title, graph_function in graph_function_list:
+    for graph_function in graph_function_list:
         fig = graph_function(chat_df)
         div = viz.plotly_figure_to_div(fig)
-        graph_divs.append((graph_title, div))
+        graph_divs.append(div)
 
     return flask.render_template(
         "chat.html",

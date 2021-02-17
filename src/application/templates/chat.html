@@ -5,7 +5,7 @@
 
 <p>Les graphes suivants montrent l'activité de la conversation.</p>
 
-{% for title, div in graph_divs %}
+{% for div in graph_divs %}
     <h3>{{title}}</h3>
     {{div|safe}}
 {% endfor %}
