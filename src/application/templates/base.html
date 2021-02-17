@@ -1,5 +1,13 @@
 {% include "includes/head.html" %}
 
-<div class="container">
+<header>
+    {% include "includes/header.html" %}
+</header>
+
+<div class="container mt-5">
     {% block body %}{% endblock %}
 </div>
+
+<footer>
+    {% include "includes/footer.html" %}
+</footer>

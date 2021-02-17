@@ -1,12 +1,9 @@
 {% extends "base.html" %}
 
 {% block body %}
-<h1>Analyse des messages</h1>
-
-<p>Les graphes suivants montrent l'activité de la conversation.</p>
+<h1>Conversation Insights</h1>
 
 {% for div in graph_divs %}
-    <h3>{{title}}</h3>
     {{div|safe}}
 {% endfor %}
 
