@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import pandas as pd
 
 from src.parser.whatsapp import extract_infos_from_message
@@ -18,7 +20,9 @@ def chat_pipeline(chat):
         chat_parsed,
         columns=["timestamp", "author", "message"]
     )
-    messages_df = messages_df.dropna()
+    messages_df.dropna(subset=["timestamp"], inplace=True)
+    messages_df["timestamp"] = messages_df["timestamp"]\
+        .apply(lambda r: datetime.strptime(r, "%d/%m/%Y %H:%M:%S"))
 
     messages_df["timestamp"] = messages_df["timestamp"].apply(pd.Timestamp)
     messages_df["message_len"] = messages_df["message"].apply(len)

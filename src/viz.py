@@ -56,7 +56,7 @@ def timeline_per_author(chat_df):
             .rename("count")\
             .reset_index()
 
-    fig = px.line(
+    fig = px.bar(
         data,
         x="timestamp",
         y="count",
@@ -70,6 +70,33 @@ def timeline_per_author(chat_df):
     )
 
     return fig
+
+
+def hours_of_activity_per_author(chat_df):
+    data = chat_df
+    data["hour"] = chat_df.index.hour.astype(str)
+
+    data = data\
+        .groupby(["hour", "author"])["message"]\
+        .count()\
+        .rename("count")\
+        .reset_index()
+
+    fig = px.bar(
+        data,
+        x="hour",
+        y="count",
+        color="author"
+    )
+
+    fig.update_layout(
+        title="Nombre de messages par heure de la journée",
+        xaxis_title="Heure de la journée",
+        yaxis_title="Nombre de messages"
+    )
+
+    return fig
+
 
 
 def most_frequent_words(chat_df):

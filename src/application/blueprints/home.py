@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 from plotly.offline.offline import plot
 
 from src.parser.chat import read_chat, chat_pipeline
-from src.application import viz
+from src import viz
 
 bp = flask.Blueprint("home", __name__)
 
@@ -27,6 +27,7 @@ def chat():
         viz.nb_messages_per_author,
         viz.len_messages_per_author,
         viz.timeline_per_author,
+        viz.hours_of_activity_per_author,
         viz.most_frequent_words
     ]
 
