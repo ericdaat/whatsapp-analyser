@@ -3,7 +3,7 @@ from datetime import datetime
 import pandas as pd
 
 from src.parser.whatsapp import extract_infos_from_message
-from src.parser.nlp import nlp_message
+from src.nlp import nlp_message
 
 
 def read_chat(path):

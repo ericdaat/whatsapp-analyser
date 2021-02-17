@@ -1,7 +1,8 @@
 import re
 import json
 
-from nltk.corpus import stopwords
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.decomposition import NMF
 
 
 with open("data/stopwords_fr.json") as f:
@@ -23,3 +24,26 @@ def nlp_message(message_text):
     output = " ".join(message_text_split)
 
     return output
+
+
+def topic_modeling(chat_df):
+    vectorizer = TfidfVectorizer(max_df=0.95, min_df=2,
+                                   stop_words=stopwords_fr)
+
+    corpus = chat_df.loc[chat_df["message_len"] > 30]["message_nlp"]
+
+    X = vectorizer.fit_transform(corpus)
+
+    topic_model = NMF(
+        n_components=10,
+        beta_loss="kullback-leibler",
+        solver="mu",
+        max_iter=1000,
+        alpha=.1,
+        l1_ratio=.5
+    )
+
+    topic_model.fit(X)
+
+    return topic_model, vectorizer
+

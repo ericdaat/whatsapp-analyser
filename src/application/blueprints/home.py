@@ -1,11 +1,8 @@
-import logging
-
 import flask
-import plotly.graph_objects as go
-from plotly.offline.offline import plot
+from numpy.lib.function_base import vectorize
 
 from src.parser.chat import read_chat, chat_pipeline
-from src import viz
+from src import viz, nlp
 
 bp = flask.Blueprint("home", __name__)
 
@@ -35,6 +32,12 @@ def chat():
         fig = graph_function(chat_df)
         div = viz.plotly_figure_to_div(fig)
         graph_divs.append(div)
+
+    # Topic Modeling
+    topic_model, vectorizer = nlp.topic_modeling(chat_df)
+    fig = viz.plot_topics(topic_model, vectorizer)
+    div = viz.plotly_figure_to_div(fig)
+    graph_divs.append(div)
 
     return flask.render_template(
         "chat.html",
