@@ -23,6 +23,7 @@ def chat():
     graph_function_list = [
         viz.nb_messages_per_author,
         viz.len_messages_per_author,
+        viz.timeline_conversation,
         viz.timeline_per_author,
         viz.hours_of_activity_per_author,
         viz.most_frequent_words

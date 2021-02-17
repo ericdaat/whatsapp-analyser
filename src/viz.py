@@ -54,6 +54,29 @@ def len_messages_per_author(chat_df):
     return fig
 
 
+def timeline_conversation(chat_df):
+    data = chat_df\
+        .groupby([pd.Grouper(freq="D")])["message"]\
+        .count()\
+        .rename("count")\
+        .reset_index()
+
+    fig = px.area(
+        data,
+        x="timestamp",
+        y="count",
+    )
+
+    fig.update_layout(
+        title="Evolution du nombre de messages",
+        xaxis_title="Date",
+        yaxis_title="Nombre de messages",
+        height=DEFAULT_HEIGHT
+    )
+
+    return fig
+
+
 def timeline_per_author(chat_df):
     data = chat_df\
             .groupby([pd.Grouper(freq="D"), "author"])["message"]\
@@ -70,7 +93,7 @@ def timeline_per_author(chat_df):
 
     fig.update_layout(
         title="Evolution du nombre de messages par utilisateur",
-        xaxis_title="Utilisateur",
+        xaxis_title="Date",
         yaxis_title="Nombre de messages",
         height=DEFAULT_HEIGHT
     )
